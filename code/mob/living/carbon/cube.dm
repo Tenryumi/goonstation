@@ -113,6 +113,11 @@
 
 			if (narrator_mode)
 				playsound(src.loc, 'sound/vox/scream.ogg', 80, 0, 0, src.get_age_pitch())
+
+			else if (cartoon_sound_mode)
+				var/the_sound = "sound/cartoonsfx/scream_[rand(1,13)].ogg"
+				playsound(src.loc, the_sound, 80, 0, 0, src.get_age_pitch())
+
 			else
 				playsound(get_turf(src), src.sound_scream, 80, 0, 0, src.get_age_pitch())
 

@@ -786,12 +786,16 @@
 							random_brute_damage(src, 20)
 							if (narrator_mode)
 								playsound(src.loc, 'sound/vox/break.ogg', 100, 1)
+							else if (cartoon_sound_mode)
+								playsound(src.loc, 'sound/cartoonsfx/knuckle_crack.ogg', 100, 1)
 							else
 								playsound(src.loc, src.sound_snap, 100, 1)
 						else
 							message = "<B>[src]</B> snaps [his_or_her(src)] fingers."
 							if (narrator_mode)
 								playsound(src.loc, 'sound/vox/deeoo.ogg', 50, 1)
+							else if (cartoon_sound_mode)
+								playsound(src.loc, 'sound/cartoonsfx/finger_snap.ogg', 100, 1)
 							else
 								playsound(src.loc, src.sound_fingersnap, 50, 1)
 
@@ -1275,6 +1279,8 @@
 						m_type = 2
 						if (narrator_mode)
 							playsound(src.loc, 'sound/vox/scream.ogg', 80, 0, 0, src.get_age_pitch())
+						else if (cartoon_sound_mode)
+							playsound(src.loc, "sound/cartoonsfx/scream_[rand(1,13)].ogg", 80, 0, 0, src.get_age_pitch())
 						else if (src.sound_list_scream && src.sound_list_scream.len)
 							playsound(src.loc, pick(src.sound_list_scream), 80, 0, 0, src.get_age_pitch())
 						else
@@ -1488,6 +1494,8 @@
 						else
 							if (narrator_mode)
 								playsound(get_turf(src), 'sound/vox/fart.ogg', 50, 0, 0, src.get_age_pitch())
+							if (cartoon_sound_mode)
+								playsound(get_turf(src), "sound/cartoonsfx/fart_[rand(1,6)].ogg", 50, 0, 0, src.get_age_pitch())
 							else
 								if (src.getStatusDuration("food_deep_fart"))
 									playsound(get_turf(src), src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3)

@@ -737,7 +737,22 @@ var/mutable_appearance/fluid_ma
 						src.changeStatus("stunned", 2 SECONDS)
 						src.changeStatus("weakened", 2 SECONDS)
 						src.force_laydown_standup()
-						playsound(F.loc, "sound/misc/slip.ogg", 50, 1, -3)
+						if (cartoon_sound_mode)
+							var/slip_fx = rand(1,2)
+							switch (slip_fx)
+								if(1)
+									playsound(F.loc, "sound/cartoonsfx/slip", 50, 1, -3)
+									playsound(F.loc, "sound/cartoonsfx/scream_2.ogg", 70, 1, -3) //"SUBALUWA"
+									sleep(0.2 SECONDS)
+									playsound(F.loc, "sound/cartoonsfx/impact_1.ogg", 70, 1, -3)
+								if(2)
+									playsound(F.loc, "sound/cartoonsfx/slip", 50, 1, -3)
+									sleep(0.2 SECONDS)
+									playsound(F.loc, "sound/cartoonsfx/impact_2.ogg", 70, 1, -3)
+									sleep(0.5 SECONDS)
+									playsound(F.loc, "sound/cartoonsfx/pain_1.ogg", 70, 1, -3)
+						else
+							playsound(F.loc, "sound/misc/slip.ogg", 50, 1, -3)
 				//space lube. this code bit is shit but i'm too lazy to make it Real right now. the proper implementation should also make exceptions for ice and stuff.
 				else if (master_block_slippy == -1) //spacelube
 					src.pulling = null

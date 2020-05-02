@@ -627,6 +627,7 @@ var/global
 #endif
 
 	narrator_mode = 0
+	cartoon_sound_mode = 0
 
 	disable_next_click = 0
 

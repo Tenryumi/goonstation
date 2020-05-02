@@ -850,14 +850,32 @@ var/global/IP_alerts = 1
 /client/proc/narrator_mode()
 	set name = "Toggle Narrator Mode"
 	set category = "Toggles (Server)"
-	set desc = "Toggle narrator mode on or off."
+	set desc = "Toggle narrator mode on or off. Disables cartoon sound mode if it is enabled."
 	admin_only
 
 	narrator_mode = !(narrator_mode)
 
-	logTheThing("admin", usr, null, "toggled narrator mode [narrator_mode ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled narrator mode [narrator_mode ? "on" : "off"].", "admin")
-	message_admins("[key_name(usr)] toggled narrator mode [narrator_mode ? "on" : "off"]")
+	logTheThing("admin", usr, null, "toggled narrator mode [narrator_mode ? "on" : "off"][cartoon_sound_mode ? " and disabled cartoon sound mode" : ""].")
+	logTheThing("diary", usr, null, "toggled narrator mode [narrator_mode ? "on" : "off"][cartoon_sound_mode ? " and disabled cartoon sound mode" : ""].", "admin")
+	message_admins("[key_name(usr)] toggled narrator mode [narrator_mode ? "on" : "off"][cartoon_sound_mode ? " and disabled cartoon sound mode" : ""]")
+
+	if(cartoon_sound_mode)
+		cartoon_sound_mode = 0
+
+/client/proc/cartoon_sound_mode()
+	set name = "Toggle Cartoon Sound Mode"
+	set category = "Toggles (Server)"
+	set desc = "Toggle cartoon sfx mode on or off. Disables narrator mode if it is enabled."
+	admin_only
+
+	cartoon_sound_mode = !(cartoon_sound_mode)
+
+	logTheThing("admin", usr, null, "toggled cartoon sound mode [cartoon_sound_mode ? "on" : "off"][narrator_mode ? " and disabled narrator mode" : ""].")
+	logTheThing("diary", usr, null, "toggled cartoon sound mode [cartoon_sound_mode ? "on" : "off"][narrator_mode ? " and disabled narrator mode" : ""].", "admin")
+	message_admins("[key_name(usr)] toggled cartoon sound mode [cartoon_sound_mode ? "on" : "off"][narrator_mode ? " and disabled narrator mode" : ""]")
+
+	if (narrator_mode)
+		narrator_mode = 0
 
 /client/proc/toggle_station_name_changing()
 	set name = "Toggle Station Name Changing"

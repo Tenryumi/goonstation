@@ -94,6 +94,7 @@ var/list/admin_verbs = list(
 		///client/proc/kill_critter,
 		/datum/admins/proc/toggle_blood_system,
 		/client/proc/narrator_mode,
+		/client/proc/cartoon_sound_mode,
 		/client/proc/admin_pick_random_player,
 		/client/proc/fix_powernets,
 		/datum/admins/proc/delay_start,
