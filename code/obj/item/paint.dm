@@ -62,7 +62,7 @@
 
 //////////////////// broken paint vending machine
 
-//This is me being mean to the players.
+//This is me being mean to the players. //u got that right
 /obj/machinery/vending/paint/broken
 	name = "Broken Paint Dispenser"
 	desc = "Would dispense paint, if it were not broken."
@@ -238,9 +238,86 @@
 							qdel(src)
 							return
 
+					else if (issnippingtool(W))
+						user.visible_message("[user] begins to snip away some loose wires...", "You snip away some loose old wires that were sticking out near the maintenance panel! It's almost like someone booby trapped this thing...")
+
 					else
 						boutput(user, "<span class='alert'>The service panel must be secured first!</span>")
 						return
+
+/datum/action/bar/icon/paint_vendor_interact
+	duration = 4 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "paint_vendor_interact"
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+	var/obj/machinery/vending/paint/broken/the_vendor
+	var/the_step
+	var/obj/item/tool
+
+	New(Owner, The_Vendor, obj/item/The_Tool, The_Duration)
+		..()
+		if (The_Vendor)
+			the_vendor = The_Vendor
+		if (Owner)
+			owner = Owner
+		if (The_Tool)
+			tool = The_Tool
+		if (The_Duration)
+			duration = The_Duration
+
+	onUpdate()
+		..()
+		if (tool == null || the_vendor == null || owner == null || get_dist(owner, the_vendor) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if (get_dist(owner, the_vendor) > 1 || the_vendor == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (!tool)
+			interrupt(INTERRUPT_ALWAYS)
+			logTheThing("debug", src, the_vendor, "tried to interact with %the_vendor% with a null tool... somehow.")
+			return
+		var/verbing
+		switch (the_vendor.repair_stage)
+			if (0)
+				verbing = "to unscrew [the_vendor]'s maintenance panel"
+				playsound(get_turf(the_vendor), "sound/items/Screwdriver2.ogg", 50, 1)
+				return
+			if (1)
+				verbing = "to pry off [the_vendor]'s maintenance panel"
+				playsound(get_turf(the_vendor), "sound/items/Crowbar.ogg", 50, 1)
+				return
+			if (2)
+				verbing = "to loosen [the_vendor]'s service module bolts"
+				playsound(get_turf(the_vendor), "sound/items/Ratchet.ogg", 50, 1)
+				return
+			if (3)
+				verbing = "to replace [the_vendor]'s burnt wires"
+				return
+			if (4)
+				verbing = "pours some paint into [the_vendor]"
+				playsound(get_turf(the_vendor), "sound/misc/pourdrink.ogg", 50, 1)
+				return
+			if (5)
+				verbing = "to tighten [the_vendor]'s service module bolts."
+				playsound(get_turf(the_vendor), "sound/items/Ratchet.ogg", 50, 1)
+				return
+			if (6)
+				verbing = "to replace [the_vendor]'s maintenance panel."
+				playsound(get_turf(the_vendor), "sound/items/Deconstruct.ogg", 50, 1)
+				return
+			if (7)
+				verbing = "to secure [the_vendor]'s maintenance panel.."
+				playsound(get_turf(the_vendor), "sound/items/Screwdriver2.ogg", 50, 1)
+				return
+			if (8)
+
+
+
 
 ////////////// paint cans
 
